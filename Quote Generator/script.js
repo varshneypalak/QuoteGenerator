@@ -1,15 +1,18 @@
 const api_url="https://api.quotable.io/random"
 const author = document.querySelector(".author");
-const quote = document.querySelector(".quotetxt")
-console.log(quote)
+const quoteContent = document.querySelector(".quotetxt")
+console.log(quoteContent)
 console.log(author)
-const next = fetch("https://api.quotable.io/random")
+let category = 'happiness'
+const next = fetch('https://api.api-ninjas.com/v1/quotes',{
+    headers:{'X-Api-Key': 'QezM0P3N74H/LRtP2NJrvw==SuqcFvawN5IogPic'}
+})
 .then((response)=>{
     return response.json();
 })
 .then((data)=>{
-    quote.innerHTML=`${data.content}`
-    author.innerHTML=data.author
+    quoteContent.innerHTML=`${data[0].quote}`
+    author.innerHTML=data[0].author
     console.log(data)
 })
 .catch((error)=>{
@@ -17,13 +20,15 @@ const next = fetch("https://api.quotable.io/random")
 })
 const nextButton = document.querySelector('.next')
 nextButton.addEventListener('click',(e)=>{
-    fetch("https://api.quotable.io/random")
+    fetch('https://api.api-ninjas.com/v1/quotes',{
+        headers:{'X-Api-Key': 'QezM0P3N74H/LRtP2NJrvw==SuqcFvawN5IogPic'}
+    })
     .then((response)=>{
         return response.json();
     })
     .then((data)=>{
-        quote.innerHTML=`${data.content}`
-        author.innerHTML=data.author
+        quoteContent.innerHTML=`${data[0].quote}`
+        author.innerHTML=data[0].author
         console.log(data)
     })
     .catch((error)=>{
@@ -32,16 +37,16 @@ nextButton.addEventListener('click',(e)=>{
 })
 const tweet = document.querySelector('.twitter');
 tweet.addEventListener('click',()=>{
-    let tweet_url=`https://twitter.com/intent/tweet?url=${quote.innerHTML} by ${author.innerHTML}`
+    let tweet_url=`https://twitter.com/intent/tweet?url=${quoteContent.innerHTML} by ${author.innerHTML}`
     window.open(tweet_url,"_blank");
 })
  const audio = document.querySelector(".speak")
  audio.addEventListener('click',()=>{
-    let voice = new SpeechSynthesisUtterance(`${quote.innerHTML} by ${author.innerHTML}`)
+    let voice = new SpeechSynthesisUtterance(`${quoteContent.innerHTML} by ${author.innerHTML}`)
     speechSynthesis.speak(voice);
  })
  const copy = document.querySelector(".copy")
  copy.addEventListener("click",()=>{
-   navigator.clipboard.writeText(quote.innerHTML);
+   navigator.clipboard.writeText(quoteContent.innerHTML);
  })
  
